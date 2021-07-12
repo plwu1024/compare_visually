@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function FilterBox(props) {
+export default function FilterBox(props: any) {
   const classes = useStyles();
   // const selectedFeatures = props.selectedFeatures;
   const [selectedFeatures, setSelectedFeatures] = useState([true, false, false, true]);
   // const setSelectedFeatures = props.setSelectedFeatures;
   const [features, setFeatures] = useState(['feature 1', 'feature 2', 'feature 3', 'feature 4']);
-  
+
   return (
     <Box className={classes.box}>
       {features.map((feature, index) => (
