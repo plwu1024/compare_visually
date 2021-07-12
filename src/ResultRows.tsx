@@ -3,11 +3,11 @@ import {
 } from "react";
 import { makeStyles } from "@material-ui/core";
 import {
-  TableContainer, Box,  Table, TableRow, Checkbox,
+  TableContainer, Box, Table, TableRow, Checkbox,
   TableHead, TableBody, TableCell, TableSortLabel
 } from "@material-ui/core";
-import logo400 from './logo400.jpg'
-import logo_2 from './tsmc_2.jpg'
+import logo400 from './imgs/logo400.jpg'
+import logo_2 from './imgs/tsmc_2.jpg'
 
 interface DataHeadInfo {
   key: string;
@@ -15,23 +15,17 @@ interface DataHeadInfo {
   disablePadding: boolean;
 }
 
-const DemoDataHead: Array<DataHeadInfo> = [
-  { key: 'column1', disablePadding: true, label: 'Meta 1' },
-  { key: 'column2', disablePadding: true, label: 'Meta 2' },
-  { key: 'column3', disablePadding: true, label: 'CP' },
-  { key: 'column4', disablePadding: true, label: 'Reference' }
-]
+interface ImageProps {
+  path: string;
+  alt: string;
+}
 
 interface Datus {
   column1: number;
   column2: number;
-  column3: string;
-  column4: Array<string>;
+  column3: ImageProps;
+  column4: Array<ImageProps>;
 }
-
-const DemoData: Array<Datus> = [
-  {column1: 3, column2: 5, column3: "aaa", column4: }
-]
 
 const useStyles = makeStyles((theme) => ({
   picsrow: {
@@ -47,8 +41,27 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ResultRows(props: any) {
   const classes = useStyles();
-  const [rows, setRows] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  // const [rows, setRows] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
   const [sortingKey, serSortingKey] = useState("")
+
+  const DemoDataHead: Array<DataHeadInfo> = [
+    { key: 'column1', disablePadding: true, label: 'Meta 1' },
+    { key: 'column2', disablePadding: true, label: 'Meta 2' },
+    { key: 'column3', disablePadding: true, label: 'CP' },
+    { key: 'column4', disablePadding: true, label: 'Reference' }
+  ]
+
+  const DemoData: Array<Datus> = Array(10).fill("").map((value) => (
+    {
+      column1: value,
+      column2: value + 1,
+      column3: { path: "./imgs/logo400.jpg", alt: "cp wafer" },
+      column4: Array(20).fill("").map((index) => (
+        { path: './imgs/tsmc_2.jpg', alt: 'defect wafer' }
+      ))
+    }
+  ))
+
   return (
     <TableContainer>
       <Table>
@@ -61,13 +74,13 @@ export default function ResultRows(props: any) {
             {DemoDataHead.map((head, index) => (
               <TableCell
                 key={head.key} align='left'
-                // padding={head.disablePadding ? 'none' : 'normal'}
-                // sortDirection={orderBy === head.key ? order : false}
+                padding={head.disablePadding ? 'none' : 'normal'}
+              // sortDirection={orderBy === head.key ? order : false}
               >
                 <TableSortLabel
                   active={sortingKey === head.key}
-                  // direction={sortingKey === head.key ? order : 'asc'}
-                  // onClick={createSortHandler(head.key)}
+                // direction={sortingKey === head.key ? order : 'asc'}
+                // onClick={createSortHandler(head.key)}
                 >
                   {head.label}
                   {/* {sortingKey === head.key ? (
@@ -81,23 +94,32 @@ export default function ResultRows(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row, index) => (
+          {DemoData.map((datus, index) => (
             <TableRow>
               <TableCell padding='checkbox' >
                 <Checkbox />
               </TableCell>
-              <TableCell>0.01</TableCell>
+              <TableCell>{datus.column1}</TableCell>
+              <TableCell>{datus.column2}</TableCell>
               <TableCell>
                 <Box className={classes.picsrow} >
-                  <img src={logo400} className={classes.smallpic} />
+                  <img
+                    // src={require(datus.column3.path)}
+                    src={logo400}
+                    alt={datus.column3.alt}
+                    className={classes.smallpic}
+                  />
                 </Box>
               </TableCell>
               <TableCell className={classes.picsrow}>
-                <Box className={classes.smallpic} ></Box>
-                <Box className={classes.smallpic} ></Box>
-                <Box className={classes.smallpic} ></Box>
-                <Box className={classes.smallpic} ></Box>
-                <Box className={classes.smallpic} ></Box>
+                {datus.column4.map((single_image, index) => (
+                  <img
+                    // src={require(single_image.path)}
+                    src={logo_2}
+                    alt={single_image.alt}
+                    className={classes.smallpic}
+                  />
+                ))}
               </TableCell>
             </TableRow>
           ))}
