@@ -8,24 +8,8 @@ import {
 } from "@material-ui/core";
 import logo400 from './imgs/logo400.jpg'
 import logo_2 from './imgs/tsmc_2.jpg'
+import { DataHeadInfo, Datus } from "./interfaces";
 
-interface DataHeadInfo {
-  key: string;
-  label: string;
-  disablePadding: boolean;
-}
-
-interface ImageProps {
-  path: string;
-  alt: string;
-}
-
-interface Datus {
-  column1: number;
-  column2: number;
-  column3: ImageProps;
-  column4: Array<ImageProps>;
-}
 
 const useStyles = makeStyles((theme) => ({
   picsrow: {

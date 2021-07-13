@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core';
 import {
   AppBar, Typography, Fab, CssBaseline, Dialog,
-  Toolbar, Box, Button, Select, MenuItem
+  Toolbar, Box, Button, Select, LinearProgress,
+  MenuItem
 } from '@material-ui/core'
 import { ShoppingCart } from '@material-ui/icons';
 import SimplePagination from './SimplePagination';
 import CompareMain from './CompareMain'
 import FeatureSelection from './FeatureSelection';
+import ShowMain from './ShowMain';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(2),
     bottom: theme.spacing(2),
   },
-  welcomeMain:{
+  welcomeMain: {
     height: '100%',
     width: '100%',
     display: 'flex',
@@ -51,6 +53,7 @@ function App() {
   const [selectTabIsOpen, setSelectTabIsOpen] = useState(false)
   const [featureSelectionDialogIsOpen, setFeatureSelectionDialogIsOpen] = useState(true);
   const [showLandingPage, setShowLandingPage] = useState(true)
+  const [loadingTasks, setLoadingTasks] = useState<Array<string>>([]);
 
   return (
     <Box className={classes.root}>
@@ -64,8 +67,8 @@ function App() {
           </Button>
           <Select
             open={selectTabIsOpen}
-            onClose={() => {setSelectTabIsOpen(false)}}
-            onOpen={() => {setSelectTabIsOpen(true)}}
+            onClose={() => { setSelectTabIsOpen(false) }}
+            onOpen={() => { setSelectTabIsOpen(true) }}
             value={tabType}
             onChange={(event) => setTabType(event.target.value as string)}
           >
@@ -75,6 +78,7 @@ function App() {
           <Typography variant='h5' className={classes.appname}>Compare</Typography>
           <SimplePagination pageNo={1} pageAmount={30} onChange={() => { }} />
         </Toolbar>
+        {(loadingTasks.length > 0) && (<LinearProgress />)}
       </AppBar>
       <Toolbar />
       {/* {showLandingPage && (
@@ -83,12 +87,13 @@ function App() {
           <Typography variant='h4'>Select Feature First.</Typography>
         </Box>
       )} */}
-      <CompareMain />
+      {tabType === "compare" && <CompareMain />}
+      {tabType === "show" && <ShowMain />}
       <Fab className={classes.fab} color='primary'>
         <ShoppingCart />
       </Fab>
       <Dialog open={featureSelectionDialogIsOpen}
-        onClose={()=>{setFeatureSelectionDialogIsOpen(false)}}
+        onClose={() => { setFeatureSelectionDialogIsOpen(false) }}
       >
         <FeatureSelection />
       </Dialog>
