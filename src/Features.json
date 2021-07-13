@@ -1,0 +1,32 @@
+[
+  {
+    "group_title": "Group A",
+    "features": [
+      {"name": "aa", "status": false}, 
+      {"name": "bb", "status": false}, 
+      {"name": "cc", "status": false}, 
+      {"name": "dd", "status": false}, 
+      {"name": "ee", "status": false}, 
+      {"name": "ff", "status": false}
+    ]
+  },
+  {
+    "group_title": "Group B",
+    "features": [
+      {"name": "aaaaa", "status": false}, 
+      {"name": "bbb", "status": false}, 
+      {"name": "cccccccc", "status": false}, 
+      {"name": "ddddddd eeeeeeff", "status": false}
+    ]
+  },
+  {
+    "group_title": "Value A",
+    "features": [
+      {"name": 0.001, "status": false}, 
+      {"name": 0.002, "status": false}, 
+      {"name": 0.003, "status": false}, 
+      {"name": 0.004, "status": false}, 
+      {"name": 0.005, "status": false}, {"name": 0.006, "status": false}
+    ]
+  }
+]

@@ -5,49 +5,41 @@ import {
   Container, Typography, Button, Dialog, Box
 } from '@material-ui/core'
 import { ExpandMore } from '@material-ui/icons';
+import { FeatureGroup } from './interfaces';
+// import 
 
-interface Feature {
-  name: string | number;
-  status: boolean;
-}
-
-interface FeatureGroup {
-  group_title: string;
-  features: Array<Feature>;
-}
-
-const DemoFeatures: Array<FeatureGroup> = [
-  {
-    group_title: 'Group A',
-    features: [
-      {name: 'aa', status: false}, 
-      {name: 'bb', status: false}, 
-      {name: 'cc', status: false}, 
-      {name: 'dd', status: false}, 
-      {name: 'ee', status: false}, 
-      {name: 'ff', status: false}
-    ]
-  },
-  {
-    group_title: 'Group B',
-    features: [
-      {name: 'aaaaa', status: false}, 
-      {name: 'bbb', status: false}, 
-      {name: 'cccccccc', status: false}, 
-      {name: 'ddddddd eeeeeeff', status: false}
-    ]
-  },
-  {
-    group_title: 'Value A',
-    features: [
-      {name: 0.001, status: false}, 
-      {name: 0.002, status: false}, 
-      {name: 0.003, status: false}, 
-      {name: 0.004, status: false}, 
-      {name: 0.005, status: false}, {name: 0.006, status: false}
-    ]
-  }
-]
+// const DemoFeatures: Array<FeatureGroup> = [
+//   {
+//     group_title: 'Group A',
+//     features: [
+//       {name: 'aa', status: false}, 
+//       {name: 'bb', status: false}, 
+//       {name: 'cc', status: false}, 
+//       {name: 'dd', status: false}, 
+//       {name: 'ee', status: false}, 
+//       {name: 'ff', status: false}
+//     ]
+//   },
+//   {
+//     group_title: 'Group B',
+//     features: [
+//       {name: 'aaaaa', status: false}, 
+//       {name: 'bbb', status: false}, 
+//       {name: 'cccccccc', status: false}, 
+//       {name: 'ddddddd eeeeeeff', status: false}
+//     ]
+//   },
+//   {
+//     group_title: 'Value A',
+//     features: [
+//       {name: 0.001, status: false}, 
+//       {name: 0.002, status: false}, 
+//       {name: 0.003, status: false}, 
+//       {name: 0.004, status: false}, 
+//       {name: 0.005, status: false}, {name: 0.006, status: false}
+//     ]
+//   }
+// ]
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -61,6 +53,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }))
+
+const DemoFeatures: Array<FeatureGroup> = require('./Features.json')
 
 interface FeatureSelectionProps{
   // open: boolean

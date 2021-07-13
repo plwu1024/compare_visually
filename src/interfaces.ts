@@ -15,3 +15,13 @@ export interface Datus {
   column3: ImageProps;
   column4: Array<ImageProps>;
 }
+
+export interface Feature {
+  name: string | number;
+  status: boolean;
+}
+
+export interface FeatureGroup {
+  group_title: string;
+  features: Array<Feature>;
+}
