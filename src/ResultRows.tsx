@@ -1,22 +1,24 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   makeStyles,
   TableContainer, Box, Table, TableRow, Checkbox,
   TableHead, TableBody, TableCell
 } from "@material-ui/core";
-import { useEffect, useState } from "react";
 import logo400 from './imgs/logo400.jpg'
 import logo_2 from './imgs/tsmc_2.jpg'
+import black700 from './imgs/black700.jpg'
 import { DataHeadInfo, Datus } from "./interfaces";
+import ImageHorizontalCollection from "./ImageCollection";
 
+const PIC_SIZE: number = 80
 
 const useStyles = makeStyles((theme) => ({
   picsrow: {
     display: 'flex',
   },
   smallpic: {
-    height: '100px',
-    width: '100px',
+    height: `${PIC_SIZE}px`,
+    width: `${PIC_SIZE}px`,
     backgroundColor: 'grey',
     marginRight: theme.spacing(0.5),
   },
@@ -28,8 +30,8 @@ interface ResultRowsProps {
 }
 
 const DemoDataHead: Array<DataHeadInfo> = [
-  { key: "column1", disablePadding: true, align: "center", label: "Meta 1" },
-  { key: "column2", disablePadding: true, align: "center", label: "Meta 2" },
+  { key: "column1", disablePadding: false, align: "left", label: "Meta1" },
+  { key: "column2", disablePadding: false, align: "left", label: "Meta2" },
   { key: "column3", disablePadding: false, align: "left", label: "CP" },
   { key: "column4", disablePadding: false, align: "left", label: "Reference" }
 ]
@@ -99,21 +101,14 @@ export default function ResultRows(props: ResultRowsProps) {
                 <Box className={classes.picsrow} >
                   <img
                     // src={require(datus.column3.path)}
-                    src={logo400}
+                    src={black700}
                     alt={datus.column3.alt}
                     className={classes.smallpic}
                   />
                 </Box>
               </TableCell>
-              <TableCell className={classes.picsrow}>
-                {datus.column4.map((single_image, index) => (
-                  <img
-                    // src={require(single_image.path)}
-                    src={logo_2}
-                    alt={single_image.alt}
-                    className={classes.smallpic}
-                  />
-                ))}
+              <TableCell>
+                <ImageHorizontalCollection colAmount={9} rowAmount={2} imageData={datus.column4}/>
               </TableCell>
             </TableRow>
           ))}

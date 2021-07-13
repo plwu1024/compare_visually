@@ -4,10 +4,9 @@ import { makeStyles } from '@material-ui/core';
 // import FilterBox from './FilterBox';
 // import ResultRows from './ResultRows';
 import { DataHeadInfo, Datus, ImageProps } from './interfaces';
-import logo400 from './imgs/logo400.jpg'
-import logo_2 from './imgs/tsmc_2.jpg'
+import black700 from './imgs/black700.jpg'
 
-const IMAGE_WIDTH: number = 200
+const IMAGE_WIDTH: number = 160
 
 // const colAmount: number = Math.floor((document.body.clientWidth - 300)/IMAGE_WIDTH)
 // const imageListWidth: number = colAmount * IMAGE_WIDTH
@@ -44,7 +43,7 @@ export default function ShowMain(props: any) {
     updateWidth()
   }
 
-  const DemoData: Array<ImageProps> = Array(10).fill("").map((value) => (
+  const DemoData: Array<ImageProps> = Array(40).fill("").map((value) => (
     {
       path: "./imgs/logo400.jpg",
       alt: "cp wafer"
@@ -56,7 +55,7 @@ export default function ShowMain(props: any) {
       <ImageList rowHeight={IMAGE_WIDTH + 20} cols={colAmount} className={classes.imageList}>
         {DemoData.map((value, index) => (
           <ImageListItem>
-            <img src={logo_2} alt={value.alt} className={classes.img} />
+            <img src={black700} alt={value.alt} className={classes.img} />
           </ImageListItem>
         ))}
       </ImageList>
