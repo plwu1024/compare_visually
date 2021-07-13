@@ -59,6 +59,9 @@ export default function App() {
   const [featureSelectionDialogIsOpen, setFeatureSelectionDialogIsOpen] = useState(true);
   const [showLandingPage, setShowLandingPage] = useState(true)
   const [loadingTasks, setLoadingTasks] = useState<Array<string>>([]);
+  const [pageNo, setPageNo] = useState(1);
+  const [pageAmount, setPageAmount] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
 
   return (
     <Box className={classes.root}>
@@ -81,7 +84,11 @@ export default function App() {
             <MenuItem value={"show"}>CP wafer pattern</MenuItem>
           </Select>
           <Typography variant='h5' className={classes.appname}>Compare</Typography>
-          <SimplePagination pageNo={1} pageAmount={30} onChange={() => { }} />
+          <SimplePagination
+            pageNo={pageNo} pageAmount={pageAmount} rowsPerPage={rowsPerPage}
+            onPageNoChange={(value: number) => { setPageNo(value) }}
+            onRowsPerPageChange={(value: number) => { setRowsPerPage(value) }}
+          />
         </Toolbar>
         {(loadingTasks.length > 0) && (<LinearProgress />)}
       </AppBar>
@@ -95,7 +102,7 @@ export default function App() {
       {(tabType === "compare" || tabType === "show") && (
         <FeatureShowBar selectedFeatures={selectedFeatures} />
       )}
-      {tabType === "compare" && <CompareMain />}
+      {tabType === "compare" && <CompareMain pageNo={pageNo} rowsPerPage={rowsPerPage} />}
       {tabType === "show" && <ShowMain />}
       <Fab className={classes.fab} color='primary'>
         <ShoppingCart />

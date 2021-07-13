@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
-  Box, IconButton, TextField, Typography,
-  makeStyles
+  makeStyles,
+  Box, IconButton, TextField, Typography, Select,
+  MenuItem
 } from "@material-ui/core"
 import {
   ChevronLeft, ChevronRight
 } from "@material-ui/icons"
+
+const ROWS_PER_PAGE_OPTIONS: Array<number> = [1, 2, 3, 4, 6, 8, 10, 15]
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -24,16 +27,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function SimplePagination(props: { pageNo: number, pageAmount: number, onChange: Function }) {
+interface SimplePaginationProps {
+  pageNo: number;
+  pageAmount: number;
+  rowsPerPage: number;
+  // onPageNoChange: {(pageNo: number): React.Dispatch<React.SetStateAction<number>>;};
+  // onRowsPerPageChange: {(rowsPerPage: number): React.Dispatch<React.SetStateAction<number>>;};
+  onPageNoChange: Function;
+  onRowsPerPageChange: Function;
+  rowsPerPageOptions?: Array<number>;
+}
+
+export default function SimplePagination(props: SimplePaginationProps) {
   const classes = useStyles();
   const [pageNo, setPageNo] = useState(1);
   const [pageAmount, setPageAmount] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [selectRowsPerPageIsOpen, setSelectRowsPerPageIsOpen] = useState(false);
+  const [rowsPerPageOptions, setRowsPerPageOptions] = useState<Array<number>>([]);
 
   const toPositiveInt = (_a: number | string, defaultValue: number = 1): number => {
     let _newNum: number
     if (typeof _a === "string") {
       _newNum = parseInt(_a)
-      if (_newNum !== _newNum) {
+      if (Number.isNaN(_newNum)) {
         _newNum = defaultValue
       }
     }
@@ -55,28 +72,49 @@ export default function SimplePagination(props: { pageNo: number, pageAmount: nu
       _newNo = pageAmount
     }
     if (_newNo !== pageNo) {
-      props.onChange(_newNo)
-      setPageNo(_newNo)
-    }
-  }
-  const updatePageAmount = (_a: number | string) => {
-    let _newAmount: number
-    _newAmount = toPositiveInt(_a, pageAmount)
-    if (_newAmount < pageNo) {
-      setPageNo(_newAmount)
-    }
-    if (_newAmount !== pageAmount) {
-      setPageAmount(_newAmount)
+      props.onPageNoChange(_newNo)
     }
   }
 
+  // const updatePageAmount = (_a: number | string) => {
+  //   let _newAmount: number
+  //   _newAmount = toPositiveInt(_a, pageAmount)
+  //   if (_newAmount < pageNo) {
+  //     props.onPageNoChange(_newAmount)
+  //   }
+  //   if (_newAmount !== pageAmount) {
+  //     props.onRowsPerPageChange(_newAmount)
+  //   }
+  // }
+
   useEffect(() => {
-    updatePageNo(props.pageNo)
-    updatePageAmount(props.pageAmount)
+    setPageNo(props.pageNo)
+    setPageAmount(props.pageAmount)
+    setRowsPerPage(props.rowsPerPage)
+    if (props.rowsPerPageOptions !== undefined){
+      setRowsPerPageOptions(props.rowsPerPageOptions)
+    }
+    else{
+      setRowsPerPageOptions(ROWS_PER_PAGE_OPTIONS)
+    }
   }, [props])
 
   return (
     <Box className={classes.box}>
+      <Typography>每頁行數：</Typography>
+      <Select
+        open={selectRowsPerPageIsOpen}
+        onClose={() => { setSelectRowsPerPageIsOpen(false) }}
+        onOpen={() => { setSelectRowsPerPageIsOpen(true) }}
+        value={rowsPerPage}
+        onChange={(event) => props.onRowsPerPageChange(event.target.value as number)}
+        variant='standard'
+      >
+        {rowsPerPageOptions.map((value) => (
+          <MenuItem value={value}>{value}</MenuItem>
+        ))}
+        {/* <MenuItem value={"show"}>CP wafer pattern</MenuItem> */}
+      </Select>
       <IconButton disabled={pageNo <= 1} size='small'
         onClick={() => { updatePageNo(pageNo - 1) }}
       >

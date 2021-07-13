@@ -38,7 +38,7 @@ export default function CompareMain(props: any) {
   return (
     <Container  className={classes.main}>
       {/* <FilterBox /> */}
-      <ResultRows />
+      <ResultRows pageNo={props.pageNo} rowsPerPage={props.rowsPerPage} />
     </Container>
   )
 }

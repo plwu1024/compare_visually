@@ -1,11 +1,10 @@
+// import { useState, useEffect } from "react";
 import {
-  useState, useEffect
-} from "react";
-import { makeStyles } from "@material-ui/core";
-import {
+  makeStyles,
   TableContainer, Box, Table, TableRow, Checkbox,
-  TableHead, TableBody, TableCell, TableSortLabel
+  TableHead, TableBody, TableCell
 } from "@material-ui/core";
+import { useEffect, useState } from "react";
 import logo400 from './imgs/logo400.jpg'
 import logo_2 from './imgs/tsmc_2.jpg'
 import { DataHeadInfo, Datus } from "./interfaces";
@@ -23,28 +22,39 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function ResultRows(props: any) {
+interface ResultRowsProps {
+  rowsPerPage: number;
+  pageNo: number;
+}
+
+const DemoDataHead: Array<DataHeadInfo> = [
+  { key: "column1", disablePadding: true, align: "center", label: "Meta 1" },
+  { key: "column2", disablePadding: true, align: "center", label: "Meta 2" },
+  { key: "column3", disablePadding: false, align: "left", label: "CP" },
+  { key: "column4", disablePadding: false, align: "left", label: "Reference" }
+]
+
+const DemoData: Array<Datus> = Array(10).fill("").map((value, index) => (
+  {
+    column1: index,
+    column2: value*2,
+    column3: { path: "./imgs/logo400.jpg", alt: "cp wafer" },
+    column4: Array(20).fill("").map((index) => (
+      { path: './imgs/tsmc_2.jpg', alt: 'defect wafer' }
+    ))
+  }
+))
+
+export default function ResultRows(props: ResultRowsProps) {
   const classes = useStyles();
-  // const [rows, setRows] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-  const [sortingKey, serSortingKey] = useState("")
+  const [pageNo, setPageNo] = useState(props.pageNo);
+  const [rowsPerPage, setRowsPerPage] = useState(props.rowsPerPage);
+  // const [sortingKey, serSortingKey] = useState("")
 
-  const DemoDataHead: Array<DataHeadInfo> = [
-    { key: "column1", disablePadding: false, align: "center", label: "Meta 1" },
-    { key: "column2", disablePadding: false, align: "center", label: "Meta 2" },
-    { key: "column3", disablePadding: false, align: "left", label: "CP" },
-    { key: "column4", disablePadding: false, align: "left", label: "Reference" }
-  ]
-
-  const DemoData: Array<Datus> = Array(10).fill("").map((value) => (
-    {
-      column1: value,
-      column2: value + 1,
-      column3: { path: "./imgs/logo400.jpg", alt: "cp wafer" },
-      column4: Array(20).fill("").map((index) => (
-        { path: './imgs/tsmc_2.jpg', alt: 'defect wafer' }
-      ))
-    }
-  ))
+  useEffect(() => {
+    setPageNo(props.pageNo)
+    setRowsPerPage(props.rowsPerPage)
+  }, [props])
 
   return (
     <TableContainer>
@@ -61,24 +71,24 @@ export default function ResultRows(props: any) {
                 padding={head.disablePadding ? 'none' : 'normal'}
               // sortDirection={orderBy === head.key ? order : false}
               >
-                <TableSortLabel
-                  active={sortingKey === head.key}
-                // direction={sortingKey === head.key ? order : 'asc'}
-                // onClick={createSortHandler(head.key)}
+                {head.label}
+                {/* <TableSortLabel
+                  // active={sortingKey === head.key}
+                  // direction={sortingKey === head.key ? order : 'asc'}
+                  // onClick={createSortHandler(head.key)}
                 >
-                  {head.label}
-                  {/* {sortingKey === head.key ? (
+                  {sortingKey === head.key ? (
                     <span className={classes.visuallyHidden}>
                       {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                     </span>
-                  ) : null} */}
-                </TableSortLabel>
+                  ) : null}
+                </TableSortLabel> */}
               </TableCell>
             ))}
           </TableRow>
         </TableHead>
         <TableBody>
-          {DemoData.map((datus, index) => (
+          {DemoData.slice(pageNo * rowsPerPage, (pageNo+1) * rowsPerPage).map((datus, index) => (
             <TableRow>
               <TableCell padding='checkbox' >
                 <Checkbox />
