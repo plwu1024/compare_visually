@@ -10,6 +10,10 @@ import SimplePagination from './SimplePagination';
 import CompareMain from './CompareMain'
 import FeatureSelection from './FeatureSelection';
 import ShowMain from './ShowMain';
+import { FeatureGroup } from './interfaces';
+import FeatureShowBar from './FeatureShowBar';
+
+const DemoFeatures: Array<FeatureGroup> = require('./Features.json')
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     display: 'flex',
+    paddingLeft: theme.spacing(1),
     justifyContent: 'space-between',
     '& > *': {
       marginLeft: theme.spacing(1),
@@ -44,9 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function App() {
+export default function App() {
   const classes = useStyles();
-  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState<Array<FeatureGroup>>(DemoFeatures);
   const rightDrawerWidth: Number = 400
   const rightDrawerIsOpen: boolean = (document.body.clientWidth > 1000) ? true : false;
   const [tabType, setTabType] = useState('compare')
@@ -87,6 +92,9 @@ function App() {
           <Typography variant='h4'>Select Feature First.</Typography>
         </Box>
       )} */}
+      {(tabType === "compare" || tabType === "show") && (
+        <FeatureShowBar selectedFeatures={selectedFeatures} />
+      )}
       {tabType === "compare" && <CompareMain />}
       {tabType === "show" && <ShowMain />}
       <Fab className={classes.fab} color='primary'>
@@ -95,10 +103,12 @@ function App() {
       <Dialog open={featureSelectionDialogIsOpen}
         onClose={() => { setFeatureSelectionDialogIsOpen(false) }}
       >
-        <FeatureSelection />
+        <FeatureSelection
+          selectedFeatures={selectedFeatures}
+          setSelectedFeatures={setSelectedFeatures}
+          setDialogIsOpen={setFeatureSelectionDialogIsOpen}
+        />
       </Dialog>
     </Box>
   )
 }
-
-export default App;

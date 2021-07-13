@@ -29,10 +29,10 @@ export default function ResultRows(props: any) {
   const [sortingKey, serSortingKey] = useState("")
 
   const DemoDataHead: Array<DataHeadInfo> = [
-    { key: 'column1', disablePadding: true, label: 'Meta 1' },
-    { key: 'column2', disablePadding: true, label: 'Meta 2' },
-    { key: 'column3', disablePadding: true, label: 'CP' },
-    { key: 'column4', disablePadding: true, label: 'Reference' }
+    { key: "column1", disablePadding: false, align: "center", label: "Meta 1" },
+    { key: "column2", disablePadding: false, align: "center", label: "Meta 2" },
+    { key: "column3", disablePadding: false, align: "left", label: "CP" },
+    { key: "column4", disablePadding: false, align: "left", label: "Reference" }
   ]
 
   const DemoData: Array<Datus> = Array(10).fill("").map((value) => (
@@ -57,7 +57,7 @@ export default function ResultRows(props: any) {
             </TableCell>
             {DemoDataHead.map((head, index) => (
               <TableCell
-                key={head.key} align='left'
+                key={head.key} align={head.align}
                 padding={head.disablePadding ? 'none' : 'normal'}
               // sortDirection={orderBy === head.key ? order : false}
               >

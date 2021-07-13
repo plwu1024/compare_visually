@@ -2,6 +2,7 @@ export interface DataHeadInfo {
   key: string;
   label: string;
   disablePadding: boolean;
+  align: "left" | "right" | "inherit" | "center" | "justify" | undefined;
 }
 
 export interface ImageProps {
