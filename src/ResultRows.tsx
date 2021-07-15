@@ -40,9 +40,9 @@ const DemoData: Array<Datus> = Array(10).fill("").map((value, index) => (
   {
     column1: index,
     column2: value*2,
-    column3: { path: "./imgs/logo400.jpg", alt: "cp wafer" },
+    column3: { path: "./imgs/logo400.jpg", alt: "cp wafer", name: 'AA0123_456' },
     column4: Array(20).fill("").map((index) => (
-      { path: './imgs/tsmc_2.jpg', alt: 'defect wafer' }
+      { path: './imgs/tsmc_2.jpg', alt: 'defect wafer', name: 'BB1234_567' }
     ))
   }
 ))
@@ -90,7 +90,7 @@ export default function ResultRows(props: ResultRowsProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {DemoData.slice(pageNo * rowsPerPage, (pageNo+1) * rowsPerPage).map((datus, index) => (
+          {DemoData.slice((pageNo-1) * rowsPerPage, pageNo * rowsPerPage).map((datus, index) => (
             <TableRow>
               <TableCell padding='checkbox' >
                 <Checkbox />
@@ -107,7 +107,7 @@ export default function ResultRows(props: ResultRowsProps) {
                   />
                 </Box>
               </TableCell>
-              <TableCell>
+              <TableCell size='small'>
                 <ImageHorizontalCollection colAmount={9} rowAmount={2} imageData={datus.column4}/>
               </TableCell>
             </TableRow>

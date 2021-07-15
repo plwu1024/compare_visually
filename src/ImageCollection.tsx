@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import {
   makeStyles,
-  TableContainer, Box, Table, TableRow, Checkbox,
-  TableHead, TableBody, TableCell, ImageList, ImageListItem, IconButton
+  Box, IconButton, Typography
 } from "@material-ui/core";
 import black700 from './imgs/black700.jpg'
-import { DataHeadInfo, Datus, ImageProps } from "./interfaces";
+import { ImageProps } from "./interfaces";
 import {
   ChevronLeft, ChevronRight
 } from "@material-ui/icons"
+import ImageCollectionBase from "./ImageCollectionBase";
 
-const PIC_SIZE: number = 80
+const PIC_SIZE: number = 120
 
 const useStyles = makeStyles((theme) => ({
   wrapperbox: {
@@ -18,10 +18,21 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   imagesbox: {
-    // display: 'flex',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     // flexGrow: 1,
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
+    " & > * ": {
+      padding: theme.spacing(0.5),
+    },
+    paddingLeft: theme.spacing(0.5),
+    paddingRight: theme.spacing(0.5),
+  },
+  imgbox: {
+    padding: theme.spacing(0.2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   imageList: {
 
@@ -32,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
   smallpic: {
     height: `${PIC_SIZE}px`,
     width: `${PIC_SIZE}px`,
-    backgroundColor: 'grey',
-    marginRight: theme.spacing(0.5),
+    // backgroundColor: 'grey',
+    // marginRight: theme.spacing(0.5),
   },
 }))
 
@@ -45,8 +56,8 @@ interface ImageHorizontalCollectionProps {
   imageData?: Array<ImageProps>;
 }
 
-const DemoData: Array<ImageProps> = Array(40).fill("").map((value, index) => (
-  { path: './imgs/tsmc_2.jpg', alt: 'defect wafer' }
+const DemoData: Array<ImageProps> = Array(100).fill("").map((value, index) => (
+  { path: './imgs/tsmc_2.jpg', alt: 'defect wafer', name: 'AA0123_456' }
 ))
 
 export default function ImageHorizontalCollection(props: ImageHorizontalCollectionProps) {
@@ -60,7 +71,7 @@ export default function ImageHorizontalCollection(props: ImageHorizontalCollecti
       <IconButton size='small'>
         <ChevronLeft fontSize='large' />
       </IconButton>
-      <Box width={(PIC_SIZE+4)*props.colAmount} className={classes.imagesbox}>
+      {/* <Box width={(PIC_SIZE + 4) * props.colAmount} className={classes.imagesbox}>
         <ImageList className={classes.imageList} cols={props.colAmount} rowHeight={PIC_SIZE}>
           {DemoData.slice(0, props.colAmount * props.rowAmount).map((item) => (
             <ImageListItem key={item.path}>
@@ -70,7 +81,18 @@ export default function ImageHorizontalCollection(props: ImageHorizontalCollecti
             </ImageListItem>
           ))}
         </ImageList>
-      </Box>
+      </Box> */}
+      {/* <Box className={classes.imagesbox}>
+        {DemoData.slice(0, props.colAmount * props.rowAmount).map((item) => (
+          <Box className={classes.imgbox}>
+          <img src={black700} alt={item.alt}
+            className={classes.smallpic}
+          />
+          <Typography variant='caption'>{item.name}</Typography>
+          </Box>
+        ))}
+      </Box> */}
+      <ImageCollectionBase colAmount={7} rowAmount={2} imageData={DemoData} />
       <IconButton size='small'>
         <ChevronRight fontSize='large' />
       </IconButton>

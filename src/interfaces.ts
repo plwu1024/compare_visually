@@ -8,6 +8,7 @@ export interface DataHeadInfo {
 export interface ImageProps {
   path: string;
   alt: string;
+  name: string;
 }
 
 export interface Datus {

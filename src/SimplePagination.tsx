@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import {
   makeStyles,
   Box, IconButton, TextField, Typography, Select,
@@ -31,8 +31,6 @@ interface SimplePaginationProps {
   pageNo: number;
   pageAmount: number;
   rowsPerPage: number;
-  // onPageNoChange: {(pageNo: number): React.Dispatch<React.SetStateAction<number>>;};
-  // onRowsPerPageChange: {(rowsPerPage: number): React.Dispatch<React.SetStateAction<number>>;};
   onPageNoChange: Function;
   onRowsPerPageChange: Function;
   rowsPerPageOptions?: Array<number>;
@@ -75,17 +73,6 @@ export default function SimplePagination(props: SimplePaginationProps) {
       props.onPageNoChange(_newNo)
     }
   }
-
-  // const updatePageAmount = (_a: number | string) => {
-  //   let _newAmount: number
-  //   _newAmount = toPositiveInt(_a, pageAmount)
-  //   if (_newAmount < pageNo) {
-  //     props.onPageNoChange(_newAmount)
-  //   }
-  //   if (_newAmount !== pageAmount) {
-  //     props.onRowsPerPageChange(_newAmount)
-  //   }
-  // }
 
   useEffect(() => {
     setPageNo(props.pageNo)

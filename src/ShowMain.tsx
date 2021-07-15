@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Container, ImageList, ImageListItem } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 // import FilterBox from './FilterBox';
 // import ResultRows from './ResultRows';
-import { DataHeadInfo, Datus, ImageProps } from './interfaces';
-import black700 from './imgs/black700.jpg'
+import { ImageProps } from './interfaces';
+import ImageCollectionBase from './ImageCollectionBase';
 
 const IMAGE_WIDTH: number = 160
 
@@ -46,19 +46,15 @@ export default function ShowMain(props: any) {
   const DemoData: Array<ImageProps> = Array(40).fill("").map((value) => (
     {
       path: "./imgs/logo400.jpg",
-      alt: "cp wafer"
+      alt: "cp wafer",
+      name: "AA0123_456"
     }
   ))
 
   return (
-    <Container className={classes.container} style={{ width: containerWidth }}>
-      <ImageList rowHeight={IMAGE_WIDTH + 20} cols={colAmount} className={classes.imageList}>
-        {DemoData.map((value, index) => (
-          <ImageListItem>
-            <img src={black700} alt={value.alt} className={classes.img} />
-          </ImageListItem>
-        ))}
-      </ImageList>
+    // <Container maxWidth='xl' className={classes.container} style={{ width: containerWidth }}>
+    <Container className={classes.container}>
+      <ImageCollectionBase colAmount={10} rowAmount={4} imageData={DemoData} />
     </Container>
   )
 }
